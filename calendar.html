@@ -56,9 +56,9 @@ function createTable(year,month){
 	
 	if(current_year==undefined && current_month==undefined){
   showmonthyear(month,year);
-  var y = [6]; 
+  var y = [7]; 
   var table=document.createElement('table');
-  for(i=0;i<6;i++)  y[i]=document.createElement('tr');
+  for(i=0;i<=6;i++)  y[i]=document.createElement('tr');
   for (i=0;i<7;i++){
 	var td=document.createElement('td');
 	td.innerHTML="SMTWTFS"[i];
@@ -73,7 +73,7 @@ function createTable(year,month){
 	var somma=0;
 	var j=1;
 	for(var i=0;i<getNumberofDays(month,year)+starterday;i++){
-		if(somma%7==0&&somma>0&&somma!=35){
+		if(somma%7==0&&somma>0){
 			j+=1;
 			console.log(y[j-1]);	
 		}
@@ -103,7 +103,7 @@ function createTable(year,month){
 	table.appendChild(y[3]);
 	table.appendChild(y[4]);
 	table.appendChild(y[5]);
-	
+	table.appendChild(y[6]);
    	document.getElementById("table").appendChild(table); 
 	current_month=month;
 	current_year=year;
@@ -112,9 +112,9 @@ function createTable(year,month){
 }else{
 		rimuoviChild();
 		showmonthyear(month,year);
-  		var y = [6]; 
+  		var y = [7]; 
   		var table=document.createElement('table');
-  		for(i=0;i<6;i++)  y[i]=document.createElement('tr');
+  		for(i=0;i<=6;i++)  y[i]=document.createElement('tr');
   		for (i=0;i<7;i++){
 		var td=document.createElement('td');
 		td.innerHTML="SMTWTFS"[i];
@@ -129,7 +129,7 @@ function createTable(year,month){
 		var somma=0;
 		var j=1;
 		for(var i=0;i<getNumberofDays(month,year)+starterday;i++){
-			if(somma%7==0&&somma>0&&somma!=35){
+			if(somma%7==0&&somma>0){
 				j+=1;
 				console.log(y[j-1]);	
 		}
@@ -159,7 +159,7 @@ function createTable(year,month){
 	table.appendChild(y[3]);
 	table.appendChild(y[4]);
 	table.appendChild(y[5]);
-	
+	table.appendChild(y[6]);
    	document.getElementById("table").appendChild(table); 
 	current_month=month;
 	current_year=year;
