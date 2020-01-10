@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+ <div id="canvas">
+      <button type="button" onclick="backward()">Indietro</button>
+      <input type="text" id="input-month_year"/>
+        <button type="button" onclick="forward()">Avanti</button>
+        <div id="table">
+        </div>
+  </div> 
+  compleanno  <input type="text" id="compleanno" name="compleanno" onclick="createTable(new Date().getFullYear(),new Date().getMonth())"/>
+  <script>
+  var month_array=["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+var current_year;
+var current_month;
+
+function showmonthyear(month,year){
+document.getElementById("input-month_year").value= month_array[month]+ " "+ year;
+}
+
+
+
+
+function rimuoviChild(){
+const myNode=document.getElementById("table");
+while(myNode.firstChild)myNode.removeChild(myNode.firstChild);
+}
+
+
+function forward(){
+
+if(current_month==11){
+current_month=0;
+createTable(++current_year,current_month);}
+else createTable(current_year,++current_month);
+
+
+
+}
+
+
+function backward(){
+	if(current_month==0){
+		current_month=11;
+		createTable(--current_year,current_month);
+	}
+	else
+	createTable(current_year,--current_month);
+}
+
+
+
+function createTable(year,month){
+	
+	if(current_year==undefined && current_month==undefined){
+  showmonthyear(month,year);
+  var y = [6]; 
+  var table=document.createElement('table');
+  for(i=0;i<6;i++)  y[i]=document.createElement('tr');
+  for (i=0;i<7;i++){
+	var td=document.createElement('td');
+	td.innerHTML="SMTWTFS"[i];
+	y[0].appendChild(td);
+	}	   
+
+
+   
+	table.appendChild(y[0]);
+	
+	var starterday=getStarterPosition(year,month);
+	var somma=0;
+	var j=1;
+	for(var i=0;i<getNumberofDays(month,year)+starterday;i++){
+		if(somma%7==0&&somma>0&&somma!=35){
+			j+=1;
+			console.log(y[j-1]);	
+		}
+		if(i<starterday){
+			let td=document.createElement("td");
+ 			td.innerHTML="";
+			y[j].appendChild(td);
+				
+
+		}else{
+			let td=document.createElement("td");
+			td.innerHTML=i-starterday+1;
+			td.onclick=function timestamp(){
+			if(td.innerHTML/10==0)
+			document.getElementById("compleanno").value=(current_month+1)+"/"+0+td.innerHTML+"/"+current_year;
+			else document.getElementById("compleanno").value=(current_month+1)+"/"+td.innerHTML+"/"+current_year;
+			};
+			y[j].appendChild(td);
+
+		}
+
+		somma+=1;
+	}
+   	
+	table.appendChild(y[1]);
+	table.appendChild(y[2]);
+	table.appendChild(y[3]);
+	table.appendChild(y[4]);
+	table.appendChild(y[5]);
+	
+   	document.getElementById("table").appendChild(table); 
+	current_month=month;
+	current_year=year;
+
+
+}else{
+		rimuoviChild();
+		showmonthyear(month,year);
+  		var y = [6]; 
+  		var table=document.createElement('table');
+  		for(i=0;i<6;i++)  y[i]=document.createElement('tr');
+  		for (i=0;i<7;i++){
+		var td=document.createElement('td');
+		td.innerHTML="SMTWTFS"[i];
+		y[0].appendChild(td);
+		}	   
+
+
+   
+		table.appendChild(y[0]);
+	
+		var starterday=getStarterPosition(year,month);
+		var somma=0;
+		var j=1;
+		for(var i=0;i<getNumberofDays(month,year)+starterday;i++){
+			if(somma%7==0&&somma>0&&somma!=35){
+				j+=1;
+				console.log(y[j-1]);	
+		}
+		if(i<starterday){
+			let td=document.createElement("td");
+ 			td.innerHTML="";
+			y[j].appendChild(td);
+				
+
+		}else{
+			let td=document.createElement("td");
+			td.innerHTML=i-starterday+1;
+			td.onclick=function timestamp(){
+			if(td.innerHTML/10==0)
+			document.getElementById("compleanno").value=(current_month+1)+"/"+0+td.innerHTML+"/"+current_year;
+			else document.getElementById("compleanno").value=(current_month+1)+"/"+td.innerHTML+"/"+current_year;
+			};
+			y[j].appendChild(td);
+
+		}
+
+		somma+=1;
+	}
+   	
+	table.appendChild(y[1]);
+	table.appendChild(y[2]);
+	table.appendChild(y[3]);
+	table.appendChild(y[4]);
+	table.appendChild(y[5]);
+	
+   	document.getElementById("table").appendChild(table); 
+	current_month=month;
+	current_year=year;
+	
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+function isDivisiblebyFour(year){
+if(year%4==0)
+return true;
+else return false;
+
+}
+function isDivisibleByFourHundred(year){
+if(year%400==0)
+return true;
+else return false;
+
+}
+
+function isSecular(year){
+ for(i=0;i<5;i++){
+	if(year==1900 + i*100)
+             return true;
+}
+
+
+}
+
+function isLeap(year){
+
+if(isSecular(year)&&isDivisibleByFourHundred(year))
+	return true;
+else{
+
+	if(!isSecular(year)&& isDivisiblebyFour(year))
+   		return true;
+	else return false;
+    }
+
+
+		}
+
+
+
+
+
+
+
+
+function getNumberofDays(mese,year){
+   var giornidelMese;
+   switch(mese){
+	case 0: 
+	case 2:
+	case 4:
+	case 6:
+	case 7:
+	case 9: 
+	case 11:giornidelMese=31;break;
+	default: switch(mese){
+			case 1: if(isLeap(year))giornidelMese=29;else giornidelMese=28;break;
+			case 3:
+			case 5:
+			case 8:
+			case 10: giornidelMese=30;break;
+			default : alert('invalid Month'); 
+								
+	
+
+		}
+
+
+
+
+     }
+return giornidelMese;
+}
+
+
+
+
+
+
+function getFirstDayOfMonth(year,month){
+	var dayofWeek=new Date(year,month,1).toString().substring(0,3);
+	return dayofWeek;
+
+}
+
+
+
+
+
+
+
+function getStarterPosition(year,month){
+	var starter;
+	switch(getFirstDayOfMonth(year,month)){
+		case "Sun": starter=0;break;
+		case "Mon": starter=1;break;
+		case "Tue": starter=2;break;
+		case "Wed": starter=3;break;
+		case "Thu": starter=4;break;
+		case "Fri": starter=5;break;
+		case "Sat": starter=6;break;
+		default : alert("Invalid Position");
+	}
+return starter;
+
+
+
+
+
+}
+
+  </script>
+  
+  
+  
+</body>
+</html>
